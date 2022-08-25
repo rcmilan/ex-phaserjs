@@ -7,7 +7,8 @@
     <title>Phaser</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.24.0/dist/phaser.min.js"></script>
     <script type="text/javascript">
-      
+      var platforms;
+
       // Carrega os assets utilizados
       function preload() {
         console.log("PRELOAD !");
@@ -21,15 +22,24 @@
           frameHeight: 48,
         });
       }
-      
+
       // Cria os objetos na tela
       function create() {
         console.log("CREATE !");
 
-        this.add.image(400, 300, 'sky');
-        this.add.image(400, 300, 'star');
+        this.add.image(400, 300, "sky");
+        this.add.image(400, 300, "star");
+
+        // objetos desse grupo terão as mesmas caracteristicas de physics
+        platforms = this.physics.add.staticGroup();
+
+        platforms.create(400, 568, "ground").setScale(2).refreshBody();
+
+        platforms.create(600, 400, "ground");
+        platforms.create(50, 250, "ground");
+        platforms.create(750, 220, "ground");
       }
-      
+
       // Atualiza elementos
       function update() {
         console.log("UPDATE !");
@@ -39,6 +49,13 @@
         type: Phaser.AUTO,
         width: 800,
         height: 600,
+        physics: {
+          default: "arcade",
+          arcade: {
+            gravity: { y: 300 },
+            debug: false,
+          },
+        },
         scene: {
           preload: preload,
           create: create,
