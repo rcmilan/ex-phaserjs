@@ -44,8 +44,6 @@
 
         platforms = this.physics.add.staticGroup(); // objetos desse grupo terão as mesmas caracteristicas de physics
 
-        bombs = this.physics.add.group();
-
         // plataformas
 
         platforms.create(400, 568, "ground").setScale(2).refreshBody();
@@ -98,6 +96,18 @@
         });
 
         stars.children.iterate(function (child) {
+          child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+        });
+
+        // bombs
+
+        bombs = this.physics.add.group({
+          key: "bomb",
+          repeat: 4,
+          setXY: { x: 50, y: 0, stepX: 150, stepY: 50 },
+        });
+
+        bombs.children.iterate(function (child) {
           child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
         });
 
